@@ -4,7 +4,8 @@
 
 package InclusaoProduto;
 
-import InclusaoProduto.presenters.InclusaoProdutoPresenter;
+import InclusaoProduto.collections.ProdutoCollection;
+import InclusaoProduto.presenters.MenuPresenter;
 
 /**
  *
@@ -13,6 +14,11 @@ import InclusaoProduto.presenters.InclusaoProdutoPresenter;
 public class InclusaoProduto {
 
     public static void main(String[] args) {
-        new InclusaoProdutoPresenter();
+
+        ProdutoCollection produtos = new ProdutoCollection();
+
+        MenuPresenter menu = new MenuPresenter(produtos);
+        
+        produtos.addObservador(menu);
     }
 }

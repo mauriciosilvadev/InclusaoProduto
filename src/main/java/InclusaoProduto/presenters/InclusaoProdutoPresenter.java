@@ -4,6 +4,7 @@
  */
 package InclusaoProduto.presenters;
 
+import InclusaoProduto.collections.ProdutoCollection;
 import InclusaoProduto.models.Produto;
 import InclusaoProduto.views.InclusaoProdutoView;
 import java.awt.event.ActionEvent;
@@ -18,13 +19,20 @@ public class InclusaoProdutoPresenter {
 
     private Produto produto;
     private InclusaoProdutoView view;
+    private ProdutoCollection produtos;
 
-    public InclusaoProdutoPresenter() {
+    public InclusaoProdutoPresenter(ProdutoCollection produtos) {
+        this.produtos = produtos;
         this.view = new InclusaoProdutoView();
-        this.view.setVisible(false);
-
         configuraView();
+    }
+    
+    public void abreView() {
         this.view.setVisible(true);
+    }
+    
+    public void fechaView() {
+        this.view.setVisible(false);
     }
 
     private void configuraView() {
@@ -45,12 +53,14 @@ public class InclusaoProdutoPresenter {
                 view.dispose();
             }
         });
+        
+        this.view.setLocationRelativeTo(null);
     }
     
     private void salvar() throws Exception {
         String nome = view.getTxtNome().getText();
         
-        if (nome    == null || nome.isEmpty()) {
+        if (nome == null || nome.isEmpty()) {
             throw new Exception("Nome do produto é obrigatório");
         }
         
@@ -74,7 +84,7 @@ public class InclusaoProdutoPresenter {
         
         produto = new Produto(nome, precoCusto, percentualLucro, precoVenda);
         
-        System.out.println(produto.toString());
+        produtos.incluir(produto);
         
         JOptionPane.showMessageDialog(view, "Produto incluído com sucesso!");
     }
